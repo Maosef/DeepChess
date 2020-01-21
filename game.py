@@ -120,4 +120,6 @@ def playGame():
 #playGame()
 #print(result)i
 #computerMove(chess.Board())a
-playGame()
+
+if __name__ == "__main__":
+	playGame()

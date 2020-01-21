@@ -9,8 +9,8 @@ def getTest(input_size, start, finish):
 
 	for i in range(start, finish):
 		name = 'pGames/volume' + str(i) + '.p'
-		t = open(name)
-		cur_dict = pickle.load(t)	
+		t = open(name,'rb')
+		cur_dict = pickle.load(t,encoding='latin1')	
 		cur_test = cur_dict['x']
 		cur_l = cur_dict['x_labels']
 		for j in range(len(cur_test)):
@@ -19,6 +19,7 @@ def getTest(input_size, start, finish):
 		t.close()
 
 	temp_test = np.zeros((len(test), 2, input_size))
+	# temp_test = np.zeros((len(test), input_size))
 
 	for i in range(len(test)):
 		first = bitifyFEN(test[i][0])	
@@ -32,10 +33,10 @@ def getTrain(input_size, total, volume_size):
 	whiteWins = np.zeros((total, input_size))
 	blackWins = np.zeros((total, input_size))
 
-	for i in range(total/volume_size):
+	for i in range(total//volume_size):
 		print("Loading batch number " + str(i))
-		f = open('pGames/volume' + str(i) + '.p')
-		full_data = pickle.load(f)
+		f = open('pGames/volume' + str(i) + '.p', 'rb')
+		full_data = pickle.load(f,encoding='latin1')
 		curX = full_data['x']
 		curX = np.array(curX)
 		curL = full_data['x_labels']
@@ -54,3 +55,4 @@ def getTrain(input_size, total, volume_size):
 			blackWins[i*volume_size+j] = second 
 	
 	return (whiteWins, blackWins)
+

@@ -1,0 +1,62 @@
+<html>
+ <head>
+    <title>Flask Intro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="static/bootstrap.min.css" rel="stylesheet" media="screen"> -->
+    <!-- <script type="text/javascript" src="http://code.jquery.com/jquery 2.1.4.min.js"></script> -->
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="lib/chessboardjs/css/chessboard-0.3.0.css">
+    <link rel="stylesheet" href="style.css">
+
+    
+ </head>
+ <body>
+
+    <script src="lib/jquery/jquery-3.2.1.min.js"></script>
+<script src="lib/chessboardjs/js/chess.js"></script>
+<script src="lib/chessboardjs/js/chessboard-0.3.0.js"></script>
+<script src="script.js"></script>
+
+
+    <div id="board" style="width: 400px"></div>
+    <button id="startBtn">Start Position</button>
+    <button id="clearBtn">Clear Board</button>
+
+    <input id="submitbutton" type="submit" value="Submit">
+    <!----------------------------------->
+    <script type="text/javascript">
+
+    function runPyScript(input){
+        var base_url = "http://127.0.0.1:5000";
+        var response = '';
+        $.ajax({
+            type: "POST",
+            url: base_url + "/login",
+            // async: false,
+            data: { mydata: input },
+            'success' : function(data) {              
+                console.log('Data: '+data.result);
+                response = data.result;
+            },
+            'error' : function(request,error)
+            {
+                // alert("Request: "+JSON.stringify(request));
+                alert("Error: "+ error);
+            }
+        });
+
+        // return jqXHR.responseText;
+        return response;
+    }
+
+    $('#submitbutton').click(function(){
+        datatosend = 'this is my matrix';
+        result = runPyScript(datatosend);
+        console.log('Got back ' + result);
+    });
+
+</script>
+
+
+</body>
+</html>
